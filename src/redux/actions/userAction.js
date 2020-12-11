@@ -4,6 +4,14 @@ import { CONSTANTS } from './../actionType';
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
+// Config header for axios
+const config = {
+    headers: {
+        'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
+        'Content-Type': 'application/json'
+    },
+};
+
 // get user details after token verification
 export const getUserAction = () => async (dispatch) => {
     try {
@@ -15,14 +23,20 @@ export const getUserAction = () => async (dispatch) => {
         }
 
         // send a post req to verify token
-        const tokenRes = await axios.post(`${API_URL}/user/tokenIsValid`, null,
-            { headers: { "x-auth-token": token } }
-        ); //returns a response True Or False
+        const tokenRes = await axios.post(`${API_URL}/user/tokenIsValid`, null, {
+            headers: {
+                'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
+                "x-auth-token": token
+            }
+        }); //returns a response True Or False
 
         if (tokenRes.data) {
-            axios.get(`${API_URL}/user/`,
-                { headers: { "x-auth-token": token } }
-            )
+            axios.get(`${API_URL}/user/`, {
+                headers: {
+                    'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
+                    "x-auth-token": token
+                }
+            })
                 .then((response) => {
                     console.log('Get User Response: ', response);
                     dispatch({
@@ -44,7 +58,15 @@ export const userRegisterAction = ({ email, password, passwordCheck, name }) => 
     if (name && email && password && passwordCheck) {
         if (password === passwordCheck) {
             if (password.length > 5) {
-                axios.post(`${API_URL}/user/register`, { email, password, passwordCheck, name })
+                // Set body
+                const body = JSON.stringify({
+                    email,
+                    password,
+                    passwordCheck,
+                    name
+                });
+                
+                axios.post(`${API_URL}/user/register`, body, config)
                     .then((response) => {
                         // console.log('Register Response: ', response);
                         toast.success("User Registered Sucessfully. Please Login to continue..");
@@ -73,9 +95,9 @@ export const userLoginAction = ({ email, password }) => async (dispatch) => {
     // Validating form in frontend 
     if (email && password) {
         // Set body
-        // const body = JSON.stringify({ email, password });
+        const body = JSON.stringify({ email, password });
 
-        axios.post(`${API_URL}/user/login`, { email, password })
+        axios.post(`${API_URL}/user/login`, body, config)
             .then((response) => {
                 // console.log('Login Response: ', response);
                 toast.success("Signed In Sucessfully");

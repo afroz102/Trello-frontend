@@ -82,7 +82,7 @@ class TrelloBoard extends PureComponent {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    {lists.map((list, index) => {
+                    {lists.forEach((list, index) => {
                       // const list = lists[listID];
                       if (list) {
                         const listCards = list.cards;
