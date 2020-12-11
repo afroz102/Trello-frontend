@@ -2,11 +2,14 @@ import axios from 'axios';
 import { CONSTANTS } from './../actionType';
 import { setActiveBoard } from './boardActions';
 
+
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+
 const token = localStorage.getItem('auth-token');
 // Config header for axios
 const config = {
   headers: {
-    'Access-Control-Allow-Origin': 'http://localhost:5000',
+    'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
     'Content-Type': 'application/json',
     "x-auth-token": token
   },
@@ -19,7 +22,7 @@ export const addList = (title, boardId) => async (dispatch) => {
   // Set body
   const body = JSON.stringify({ title, boardId });
 
-  await axios.post(`${process.env.REACT_APP_API_URL}/list/create`, body, config)
+  await axios.post(`${API_URL}/list/create`, body, config)
     .then((response) => {
 
       // console.log('response create list: ', response);
@@ -64,7 +67,7 @@ export const editTitle = (listId, newTitle) => async (dispatch) => {
   // Set body
   const body = JSON.stringify({ newTitle, listId });
 
-  await axios.post(`${process.env.REACT_APP_API_URL}/list/edit`, body, config)
+  await axios.post(`${API_URL}/list/edit`, body, config)
     .then((response) => {
 
       // console.log('response edit list: ', response);
@@ -82,7 +85,7 @@ export const editTitle = (listId, newTitle) => async (dispatch) => {
 export const deleteList = (listId, boardID) => async (dispatch) => {
   // Set body
   const body = JSON.stringify({ listId });
-  await axios.post(`${process.env.REACT_APP_API_URL}/list/delete`, body, config)
+  await axios.post(`${API_URL}/list/delete`, body, config)
     .then((response) => {
       // console.log('response create list: ', response);
       dispatch(setActiveBoard(boardID));

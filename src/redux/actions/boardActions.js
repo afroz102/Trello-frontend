@@ -1,21 +1,22 @@
 import axios from 'axios';
 import { CONSTANTS } from './../actionType';
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
-
+const token = localStorage.getItem('auth-token');
+// Config header for axios
+const config = {
+  headers: {
+    'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
+    'Content-Type': 'application/json',
+    "x-auth-token": token
+  },
+};
 
 // Get all board in homepage
 export const getAllBoard = () => async (dispatch) => {
-  const token = localStorage.getItem('auth-token');
-  // Config header for axios
-  const config = {
-    headers: {
-      'Access-Control-Allow-Origin': 'http://localhost:5000',
-      'Content-Type': 'application/json',
-      "x-auth-token": token
-    },
-  };
-  await axios.get(`${process.env.REACT_APP_API_URL}/board`, config)
+
+  await axios.get(`${API_URL}/board`, config)
     .then((response) => {
 
       // console.log('response getBoard: ', response);
@@ -33,17 +34,7 @@ export const getAllBoard = () => async (dispatch) => {
 // get board by id
 export const setActiveBoard = (id) => async (dispatch) => {
 
-  const token = localStorage.getItem('auth-token');
-  // Config header for axios
-  const config = {
-    headers: {
-      'Access-Control-Allow-Origin': 'http://localhost:5000',
-      'Content-Type': 'application/json',
-      "x-auth-token": token
-    },
-  };
-
-  await axios.get(`${process.env.REACT_APP_API_URL}/board/${id}`, config)
+  await axios.get(`${API_URL}/board/${id}`, config)
     .then((response) => {
       // console.log('response getBoard by id: ', response.data);
 
@@ -60,19 +51,10 @@ export const setActiveBoard = (id) => async (dispatch) => {
 // create a board action
 export const addBoard = (title) => async (dispatch) => {
 
-  const token = localStorage.getItem('auth-token');
-  // Config header for axios
-  const config = {
-    headers: {
-      'Access-Control-Allow-Origin': 'http://localhost:5000',
-      'Content-Type': 'application/json',
-      "x-auth-token": token
-    },
-  };
   // Set body
   const body = JSON.stringify({ title });
 
-  await axios.post(`${process.env.REACT_APP_API_URL}/board/createboard`, body, config)
+  await axios.post(`${API_URL}/board/createboard`, body, config)
     .then((response) => {
 
       // console.log('response create board: ', response);

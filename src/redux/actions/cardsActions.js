@@ -2,11 +2,13 @@
 import axios from 'axios';
 import { setActiveBoard } from './boardActions';
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+
 const token = localStorage.getItem('auth-token');
 // Config header for axios
 const config = {
   headers: {
-    'Access-Control-Allow-Origin': 'http://localhost:5000',
+    'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
     'Content-Type': 'application/json',
     "x-auth-token": token
   },
@@ -18,7 +20,7 @@ export const addCard = (title, listId, boardID) => async (dispatch) => {
   // Set body
   const body = JSON.stringify({ title, listId });
 
-  await axios.post(`${process.env.REACT_APP_API_URL}/card/create`, body, config)
+  await axios.post(`${API_URL}/card/create`, body, config)
     .then((response) => {
 
       // console.log('response create list: ', response);
@@ -38,7 +40,7 @@ export const editCard = (cardId, listId, newTitle, boardID) => async (dispatch) 
   // Set body
   const body = JSON.stringify({ cardId, listId, newTitle });
 
-  await axios.post(`${process.env.REACT_APP_API_URL}/card/edit`, body, config)
+  await axios.post(`${API_URL}/card/edit`, body, config)
     .then((response) => {
 
       // console.log('response edited list: ', response);
@@ -57,7 +59,7 @@ export const editCard = (cardId, listId, newTitle, boardID) => async (dispatch) 
 export const deleteCard = (cardId, listId, boardID) => async (dispatch) => {
   // Set body
   const body = JSON.stringify({ cardId, listId });
-  await axios.post(`${process.env.REACT_APP_API_URL}/card/delete`, body, config)
+  await axios.post(`${API_URL}/card/delete`, body, config)
     .then((response) => {
       // console.log('response delete card: ', response);
       dispatch(setActiveBoard(boardID));

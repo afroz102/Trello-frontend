@@ -2,15 +2,18 @@ import axios from 'axios';
 import { CONSTANTS } from './../actionType';
 
 
+const token = localStorage.getItem('auth-token');
+// Config header for axios
+const config = {
+    headers: {
+        'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
+        'Content-Type': 'application/json',
+        "x-auth-token": token
+    },
+};
+
 // Search query
 export const searchLists = (searchQuery, boardId) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:5000',
-            'Content-Type': 'application/json',
-        },
-    };
-
     // Set body
     const body = JSON.stringify({ searchQuery, boardId });
 
@@ -29,13 +32,6 @@ export const searchLists = (searchQuery, boardId) => async (dispatch) => {
 }
 
 export const getSearchLists = (searchQuery, boardId) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:5000',
-            'Content-Type': 'application/json',
-        },
-    };
-
     // Set body
     // const body = JSON.stringify({ searchQuery, boardId });
 
