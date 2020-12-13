@@ -7,9 +7,9 @@ import CardContent from "@material-ui/core/CardContent";
 import Icon from "@material-ui/core/Icon";
 import styled from "styled-components";
 
-import TrelloButton from "./TrelloButton";
-import TrelloForm from "./TrelloForm";
-import { editCard, deleteCard } from "../redux/actions/cardsActions";
+import TrelloButton from "./trelloFormComponents/TrelloButton";
+import TrelloForm from "./trelloFormComponents/TrelloForm";
+import { editCard, deleteCard } from "../../redux/actions/cardsActions";
 
 const CardContainer = styled.div`
   margin: 0 0 8px 0;

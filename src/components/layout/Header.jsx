@@ -4,10 +4,12 @@ import AuthOptions from "./AuthOptions";
 import "../../styles/header.css";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { ReactComponent as Logo } from "../../assets/images/trello-logo-white.svg";
 
 const SearchCardInput = styled.input`
   width: 60%;
   height: 30px;
+  margin: 5px;
   border-radius: 5px;
   border: none;
   outline: none;
@@ -38,16 +40,19 @@ const Header = () => {
   };
   return (
     <header id="fixed-header" className="header">
-      <Link to="/">
-        <h1 className="header-title">TRELLO</h1>
-      </Link>
-      {isAuthenticated ? (
-        <form onSubmit={onSubmit}>
-          <div className="search-header">
-            <SearchCardInput type="text" placeholder="Search cards" />
-          </div>
-        </form>
-      ) : null}
+      <div className="title-search-div">
+        <Link to="/board">
+          <h1 className="header-title">BOARDS</h1>
+        </Link>
+        {isAuthenticated ? (
+          <form onSubmit={onSubmit}>
+            <div className="search-header">
+              <SearchCardInput type="text" placeholder="Search cards" />
+            </div>
+          </form>
+        ) : null}
+      </div>
+      <Logo className="logo" />
       <AuthOptions />
     </header>
   );

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
-// import { connect } from "react-redux";
 
-import BoardThumbnail from "../components/BoardThumbnail";
+import BoardThumbnail from "../components/trelloComponents/BoardThumbnail";
 import { addBoard, getAllBoard } from "../redux/actions/boardActions";
+import LoadingSnipper from "../components/loadingComponent/Loading";
 
 const Thumbnails = styled.div`
   flex: 1;
@@ -75,7 +75,7 @@ const Home = () => {
     console.log("useEffect testing: ", boards);
     dispatch(getAllBoard());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addBoard(newBoardTitle));
@@ -84,26 +84,30 @@ const Home = () => {
   };
 
   const renderBoards = () => {
-    if (boards && boards.board && boards.board.length !== 0) {
-      return boards.board.map((board) => {
-        // console.log('board: ', board);
+    if (boards && boards.board) {
+      if (boards.board.length !== 0) {
+        return boards.board.map((board) => {
+          // console.log('board: ', board);
+          return (
+            <Link
+              key={board._id}
+              to={`/board/${board._id}`}
+              style={{ textDecoration: "none", marginTop: "50px" }}
+            >
+              <BoardThumbnail {...board} />
+            </Link>
+          );
+        });
+      } else {
         return (
-          <Link
-            key={board._id}
-            to={`/board/${board._id}`}
-            style={{ textDecoration: "none", marginTop: "50px" }}
-          >
-            <BoardThumbnail {...board} />
-          </Link>
+          <h2 style={{ marginTop: "50px", color: "#42596d", fontSize: "40px" }}>
+            {" "}
+            You don't have any board. Create one below...
+          </h2>
         );
-      });
+      }
     } else {
-      return (
-        <h2 style={{ marginTop: "50px", color: "#42596d", fontSize: "40px" }}>
-          {" "}
-          You don't have any board. Create one below...
-        </h2>
-      );
+      <LoadingSnipper />;
     }
   };
 

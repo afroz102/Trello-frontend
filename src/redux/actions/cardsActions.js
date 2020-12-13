@@ -2,13 +2,14 @@
 import axios from 'axios';
 import { setActiveBoard } from './boardActions';
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL ="http://localhost:5000/api";
 
 const token = localStorage.getItem('auth-token');
 // Config header for axios
 const config = {
   headers: {
-    'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
+    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     "x-auth-token": token
   },

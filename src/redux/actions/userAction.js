@@ -2,13 +2,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { CONSTANTS } from './../actionType';
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
-
+const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = "/api";
 // Config header for axios
 const config = {
     headers: {
-        'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
-        'Content-Type': 'application/json'
+        'Access-Control-Allow-Origin': '*'
     },
 };
 
@@ -25,15 +24,15 @@ export const getUserAction = () => async (dispatch) => {
         // send a post req to verify token
         const tokenRes = await axios.post(`${API_URL}/user/tokenIsValid`, null, {
             headers: {
-                'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
+                'Access-Control-Allow-Origin': '*',
                 "x-auth-token": token
             }
-        }); //returns a response True Or False
+        }); //returns a response True Or False 'Access-Control-Allow-Origin': '*',
 
         if (tokenRes.data) {
             axios.get(`${API_URL}/user/`, {
                 headers: {
-                    'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
+                    'Access-Control-Allow-Origin': '*',
                     "x-auth-token": token
                 }
             })
@@ -59,16 +58,16 @@ export const userRegisterAction = ({ email, password, passwordCheck, name }) => 
         if (password === passwordCheck) {
             if (password.length > 5) {
                 // Set body
-                const body = JSON.stringify({
-                    email,
-                    password,
-                    passwordCheck,
-                    name
-                });
-                
-                axios.post(`${API_URL}/user/register`, body, config)
+                // const body = JSON.stringify({
+                //     email,
+                //     password,
+                //     passwordCheck,
+                //     name
+                // });
+
+                axios.post(`${API_URL}/user/register`, { email, password, passwordCheck, name }, config)
                     .then((response) => {
-                        // console.log('Register Response: ', response);
+                        console.log('Register Response: ', response);
                         toast.success("User Registered Sucessfully. Please Login to continue..");
                         // dispatch({
                         //     type: CONSTANTS.REGISTER_USER,
@@ -93,19 +92,21 @@ export const userRegisterAction = ({ email, password, passwordCheck, name }) => 
 // user login Action
 export const userLoginAction = ({ email, password }) => async (dispatch) => {
     // Validating form in frontend 
+    console.log('login action');
     if (email && password) {
         // Set body
-        const body = JSON.stringify({ email, password });
+        // const body = JSON.stringify({ email, password });
 
-        axios.post(`${API_URL}/user/login`, body, config)
+        axios.post(`${API_URL}/user/login`, { email, password }, config)
             .then((response) => {
-                // console.log('Login Response: ', response);
+                console.log('Login Response: ', response);
                 toast.success("Signed In Sucessfully");
                 dispatch({
                     type: CONSTANTS.SIGNIN_USER,
                     payload: response.data
                 });
             }).catch((err) => {
+                console.log('err: ', err);
                 toast.error(err.response.data.msg);
             });
     } else {

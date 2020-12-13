@@ -6,7 +6,7 @@ import Icon from "@material-ui/core/Icon";
 
 import TrelloCard from "./TrelloCard";
 import TrelloCreate from "./TrelloCreate";
-import { editTitle, deleteList } from "../redux/actions/listsActions";
+import { editTitle, deleteList } from "../../redux/actions/listsActions";
 
 const ListContainer = styled.div`
   background-color: #dfe3e6;
@@ -63,7 +63,7 @@ const ListTitle = styled.h4`
 const TrelloList = ({ title, cards, listID, index, dispatch, boardID }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [listTitle, setListTitle] = useState(title);
-  // console.log("cards: ", cards);
+  // console.log("props: ");
   const renderEditInput = () => {
     return (
       <form onSubmit={(e) => handleFinishEditing(e)}>

@@ -32,6 +32,7 @@ const ButtonSignUp = styled(Button)`
   margin: 4px !important;
 `;
 const ButtonLogOut = styled(Button)`
+  margin: 5px 10px 5px 0 !important;
   && {
     color: white;
     background: #b70d0dbf;
@@ -41,7 +42,6 @@ const ButtonLogOut = styled(Button)`
     background: #97b2b9;
     background-color: #ff0101 !important;
   }
-  margin: 4px !important;
 `;
 const AuthOptions = () => {
   const userData = useSelector((state) => state.user);

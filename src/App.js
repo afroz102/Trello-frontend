@@ -4,8 +4,8 @@ import TrelloBoard from './pages/TrelloBoard';
 import Home from './pages/Home';
 import LandingPage from './pages/LandingPage';
 import GetSearchedPage from './pages/GetSearchedPage';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
+import Login from './components/authComponents/Login';
+import Register from './components/authComponents/Register';
 import Header from './components/layout/Header';
 
 class App extends Component {

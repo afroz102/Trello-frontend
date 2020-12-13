@@ -4,10 +4,11 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 
-import TrelloList from "../components/TrelloList";
-import TrelloCreate from "../components/TrelloCreate";
+import TrelloList from "../components/trelloComponents/TrelloList";
+import TrelloCreate from "../components/trelloComponents/TrelloCreate";
 import { setActiveBoard } from "../redux/actions/boardActions";
 import { sort } from "../redux/actions/listsActions";
+import LoadingSnipper from "../components/loadingComponent/Loading";
 
 const ListsContainer = styled.div`
   display: flex;
@@ -82,7 +83,7 @@ class TrelloBoard extends PureComponent {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    {lists.forEach((list, index) => {
+                    {lists.map((list, index) => {
                       // const list = lists[listID];
                       if (list) {
                         const listCards = list.cards;
@@ -97,6 +98,7 @@ class TrelloBoard extends PureComponent {
                           />
                         );
                       }
+                      return [];
                     })}
                     {provided.placeholder}
                     <TrelloCreate list />
@@ -105,7 +107,7 @@ class TrelloBoard extends PureComponent {
               </Droppable>
             </DragDropContext>
           ) : (
-            <div>Loading...</div>
+            <LoadingSnipper />
           )
         ) : (
           <Redirect to="/" />

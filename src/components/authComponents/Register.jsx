@@ -58,7 +58,6 @@ const Register = () => {
     e.preventDefault();
     dispatch(userRegisterAction({ email, name, password, passwordCheck }));
     // history.push("/login");
-    // setFormData({ name: "", email: "", password: "", passwordCheck: "" });
   };
 
   return (
@@ -111,86 +110,3 @@ const Register = () => {
 };
 
 export default Register;
-
-/*
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
-import UserContext from "../../context/userContext";
-import Axios from "axios";
-import ErrorNotice from "../misc/ErrorNotice";
-import "../../styles/auth.css";
-
-const Register = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [passwordCheck, setPasswordCheck] = useState();
-  const [name, setName] = useState();
-  const [error, setError] = useState();
-
-  const { setUserData } = useContext(UserContext);
-  const history = useHistory();
-
-  const submit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const newUser = { email, password, passwordCheck, name };
-      await Axios.post("http://localhost:5000/api/register", newUser);
-      const loginRes = await Axios.post("http://localhost:5000/api/login", {
-        email,
-        password,
-      });
-      setUserData({
-        token: loginRes.data.token,
-        user: loginRes.data.user,
-      });
-      localStorage.setItem("auth-token", loginRes.data.token);
-      history.push("/");
-    } catch (err) {
-      // console.log(err);
-      err.response.data.msg && setError(err.response.data.msg);
-    }
-  };
-
-  return (
-    <div className="page">
-      <h2>Register</h2>
-      {error && (
-        <ErrorNotice message={error} clearError={() => setError(undefined)} />
-      )}
-      <form className="form" onSubmit={submit}>
-        <label htmlFor="register-email">Email</label>
-        <input
-          id="register-email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <label htmlFor="register-password">Password</label>
-        <input
-          id="register-password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Verify password"
-          onChange={(e) => setPasswordCheck(e.target.value)}
-        />
-
-        <label htmlFor="register-display-name">Name</label>
-        <input
-          id="register-display-name"
-          type="text"
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <input type="submit" value="Register" />
-      </form>
-    </div>
-  );
-};
-
-export default Register;
-
-*/

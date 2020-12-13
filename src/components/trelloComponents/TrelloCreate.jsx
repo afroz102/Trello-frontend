@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import Icon from "@material-ui/core/Icon";
 
-import TrelloButton from "./TrelloButton";
-import TrelloForm from "./TrelloForm";
-import TrelloOpenForm from "./TrelloOpenForm";
+import TrelloButton from "./trelloFormComponents/TrelloButton";
+import TrelloForm from "./trelloFormComponents/TrelloForm";
+import TrelloOpenForm from "./trelloFormComponents/TrelloOpenForm";
 
-import { addCard } from "../redux/actions/cardsActions";
-import { addList } from "../redux/actions/listsActions";
+import { addCard } from "../../redux/actions/cardsActions";
+import { addList } from "../../redux/actions/listsActions";
 
 class TrelloCreate extends React.PureComponent {
   state = {
@@ -99,6 +99,7 @@ class TrelloCreate extends React.PureComponent {
   };
 
   render() {
+    console.log('this.props: ', this.props);
     const { text } = this.state;
     const { list } = this.props;
     // console.log("List: ", list);
@@ -107,6 +108,7 @@ class TrelloCreate extends React.PureComponent {
         text={text}
         onChange={this.handleInputChange}
         closeForm={this.closeForm}
+        list={list}
       >
         <TrelloButton
           onClick={

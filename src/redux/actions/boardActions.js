@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { CONSTANTS } from './../actionType';
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+const API_URL = process.env.REACT_APP_API_URL;
+// const API_URL = "http://localhost:5000/api";
 
 const token = localStorage.getItem('auth-token');
 // Config header for axios
 const config = {
   headers: {
-    'Access-Control-Allow-Origin': 'https://hello-trello-backend.herokuapp.com',
-    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
     "x-auth-token": token
   },
 };
@@ -36,7 +36,7 @@ export const setActiveBoard = (id) => async (dispatch) => {
 
   await axios.get(`${API_URL}/board/${id}`, config)
     .then((response) => {
-      // console.log('response getBoard by id: ', response.data);
+      console.log('response getBoard by id: ', response.data);
 
       dispatch({
         type: CONSTANTS.SET_ACTIVE_BOARD,
@@ -52,9 +52,9 @@ export const setActiveBoard = (id) => async (dispatch) => {
 export const addBoard = (title) => async (dispatch) => {
 
   // Set body
-  const body = JSON.stringify({ title });
+  // const body = JSON.stringify({ title });
 
-  await axios.post(`${API_URL}/board/createboard`, body, config)
+  await axios.post(`${API_URL}/board/createboard`, { title }, config)
     .then((response) => {
 
       // console.log('response create board: ', response);

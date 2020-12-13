@@ -8,6 +8,7 @@ import store from './redux/store';
 import "./index.css";
 import '@fortawesome/fontawesome-free/js/all';
 import 'react-toastify/dist/ReactToastify.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 const GlobalStyle = createGlobalStyle`
   html {
